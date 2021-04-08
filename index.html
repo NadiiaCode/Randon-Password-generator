@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <center>
+      <div class="containter">
+        <div class="content">
+          <h1>Random Password Generator</h1>
+          <br />
+          <input type="text" id="display" />
+          <br />
+          <input type="range" min="8" max="25" name="slider" id="slider" />
+          <br />
+          <button onclick="generate()">Generate</button>
+          <button onclick="copyPassword()">Copy to clipboard</button>
+          <div id="length"></div>
+        </div>
+        <div class="previous_passwords">
+          <h3>Previously generated passwords</h3>
+          <br />
+          <div id="lastNums"></div>
+        </div>
+      </div>
+    </center>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Ubuntu", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        background: #b5e9b8;
+      }
+
+      .content {
+        width: 50%;
+        padding: 60px;
+        margin-bottom: 30px;
+        border-radius: 40px;
+        background-color: #8fcc92;
+      }
+
+      input {
+        height: 40px;
+        padding-left: 10px;
+        outline: none;
+        font-size: 27px;
+        letter-spacing: 2px;
+        border-radius: 20px;
+        border: 2px solid #7fce81;
+        background: #d5fdd7;
+      }
+
+      h1 {
+        font-weight: 700;
+        font-size: 37px;
+        letter-spacing: 1px;
+        color: #0f3811;
+      }
+
+      #display {
+        width: 70%;
+      }
+
+      #length {
+        width: 120px;
+        display: inline-block;
+        font-weight: 500;
+        font-size: 24px;
+        color: #0075ff;
+      }
+
+      #slider {
+        width: 26%;
+      }
+
+      button {
+        height: 50px;
+        padding: 10px;
+        outline: none;
+        text-align: center;
+        font-weight: 500;
+        font-size: 25px;
+        border-radius: 20px;
+        border: 2px solid #7fce81;
+        background: #d5fdd7;
+      }
+
+      .previous_passwords {
+        margin-bottom: 20px;
+        font-weight: 500;
+        font-size: 25px;
+        letter-spacing: 1px;
+        color: #0f3811;
+      }
+
+      h3 {
+        font-size: 30px;
+      }
+    </style>
+
+    <script>
+      function generate() {
+        var complexity = document.getElementById("slider").value;
+        var values =
+          "ABCDEFGHIJKLMNOPQRSTUVWXZYabcdefghijklmnopqrstuvwxyz1234567890?!@#$%^&*_-+";
+        var password = "";
+        for (var i = 0; i <= complexity; i++) {
+          password =
+            password +
+            values.charAt(
+              Math.floor(Math.random() * Math.floor(values.length - 1))
+            );
+        }
+        document.getElementById("display").value = password;
+        document.getElementById("lastNums").innerHTML += password + "<br />";
+      }
+      document.getElementById("length").innerHTML = "Length: 25";
+      document.getElementById("slider").oninput = function () {
+        if (document.getElementById("slider").value > 0) {
+          document.getElementById("length").innerHTML =
+            "Length: " + document.getElementById("slider").value;
+        } else {
+          document.getElementById("length").innerHTML = "Length: 1";
+        }
+      };
+      function copyPassword() {
+        document.getElementById("display").select();
+        document.execCommand("Copy");
+        alert("Password copied to clipboard");
+      }
+    </script>
+  </body>
+</html>
